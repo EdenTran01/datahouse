@@ -10,5 +10,6 @@ The input to the Compatibility Predictor is provided in JSON format and consists
 ## Team Members
 The team members section contains an array of objects, each representing a team member. Each team member object includes the following attributes:
 
-name: The name of the team member.
+name: The name of the team member. 
+<br>
 attributes: An object containing the attributes of the team member, such as intelligence, strength, endurance, and spicy food tolerance.
