@@ -1,28 +1,3 @@
-// Function to calculate compatibility score between an applicant and a team member
-function calculateCompatibility(applicant, teamMember) {
-    // Sample calculation: Calculate compatibility based on attributes difference
-    let attributeDifference = 0;
-    for (let attribute in applicant.attributes) {
-        attributeDifference += Math.abs(applicant.attributes[attribute] - teamMember.attributes[attribute]);
-    }
-    // Normalize attribute difference to fall within [0, 1] range
-    return 1 - (attributeDifference / (Object.keys(applicant.attributes).length * 10));
-}
-
-// Function to generate compatibility scores for all applicants
-function generateCompatibilityScores(applicants, team) {
-    let compatibilityScores = [];
-    for (let applicant of applicants) {
-        let compatibilityScore = 0;
-        for (let teamMember of team) {
-            compatibilityScore += calculateCompatibility(applicant, teamMember);
-        }
-        compatibilityScore /= team.length; // Average compatibility score
-        compatibilityScores.push({ name: applicant.name, compatibilityScore: compatibilityScore });
-    }
-    return compatibilityScores;
-}
-
 // Parse input JSON
 let inputData = `{
     "team": [
@@ -89,10 +64,40 @@ let data = JSON.parse(inputData);
 let team = data.team;
 let applicants = data.applicants;
 
+// Function to calculate compatibility score between an applicant and a team member
+function calculateCompatibility(applicant, teamMember) {
+    // Sample calculation: Calculate compatibility based on attributes difference
+    let attributeDifference = 0;
+    for (let attribute in applicant.attributes) {
+        attributeDifference += Math.abs(applicant.attributes[attribute] - teamMember.attributes[attribute]);
+    }
+    // Normalize attribute difference to fall within [0, 1] range
+    return 1 - (attributeDifference / (Object.keys(applicant.attributes).length * 10));
+}
+
+// Function to generate compatibility scores for all applicants
+function generateCompatibilityScores(applicants, team) {
+    let compatibilityScores = [];
+    for (let applicant of applicants) {
+        let compatibilityScore = 0;
+        for (let teamMember of team) {
+            compatibilityScore += calculateCompatibility(applicant, teamMember);
+        }
+        compatibilityScore /= team.length; // Average compatibility score
+        compatibilityScores.push({ name: applicant.name, compatibilityScore: compatibilityScore });
+    }
+    return compatibilityScores;
+}
+
+
 // Generate compatibility scores
 let compatibilityScores = generateCompatibilityScores(applicants, team);
 
 // Output the compatibility scores in JSON format
-console.log(JSON.stringify(compatibilityScores.map(applicant => ({
-    name: applicant.name,
-    compatibilityScore: applicant.compatibilityScore.toFixed(2)}))));
+console.log(JSON.stringify
+    (compatibilityScores.map(applicant => ({
+        name: applicant.name,
+        compatibilityScore: applicant.compatibilityScore.toFixed(2)
+    }))
+    )
+);
